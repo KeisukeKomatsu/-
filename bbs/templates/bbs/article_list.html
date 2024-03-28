@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1 class="mt-5 mb-4 text-center">投稿一覧</h1>
+
+                <div class="list-group">
+                    {% for article in object_list %}
+                    <a href='{% url "bbs:detail" article.pk %}' class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ article.title }}</h5>
+                            <small>{{ article.created_at|date:"Y-m-j H:i" }}</small>
+                        </div>
+                        <p class="mb-1">{{ article.content }}</p>
+                        <small>投稿者: {{ article.author }}</small>
+                    </a>
+                    {% endfor %}
+                </div>
+
+                {% if user.is_authenticated %}
+                <div class="text-center mt-4">
+                    <a href='{% url "bbs:create" %}' class='btn btn-primary'>新規投稿</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
